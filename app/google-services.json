@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "593781736389",
+    "firebase_url": "https://chatassalam-9b369.firebaseio.com",
+    "project_id": "chatassalam-9b369",
+    "storage_bucket": "chatassalam-9b369.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593781736389:android:efdaeacce8462c44",
+        "android_client_info": {
+          "package_name": "com.assalam.chatassalam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "593781736389-phrv4heu9a5heatqks8teamqnsspuifh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEgrh8bzPZ8KNo40kRbHooJoTo7xMdGt8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
