@@ -349,7 +349,7 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.MyViewH
                     call.enqueue(new Callback<GetTime>() {
                         @Override
                         public void onResponse(Call<GetTime> call, final Response<GetTime> response) {
-                            Query queryRef = mDatabase.child("chat_header").child(idUser).orderByChild("header").startAt("personal_" + tvIdUser.getText().toString() + "_" + idUser);
+                            Query queryRef = mDatabase.child("chat_header").child(idUser).orderByChild("header").equalTo("personal_" + tvIdUser.getText().toString() + "_" + idUser);
                             queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -367,7 +367,7 @@ class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.MyViewH
                                 }
                             });
 
-                            Query queryRef1 = mDatabase.child("chat_header").child(tvIdUser.getText().toString()).orderByChild("header").startAt("personal_" + idUser + "_" + tvIdUser.getText().toString());
+                            Query queryRef1 = mDatabase.child("chat_header").child(tvIdUser.getText().toString()).orderByChild("header").equalTo("personal_" + idUser + "_" + tvIdUser.getText().toString());
                             queryRef1.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {

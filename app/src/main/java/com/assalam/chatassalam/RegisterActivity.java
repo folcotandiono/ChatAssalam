@@ -26,6 +26,7 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText etNoHp;
+    private EditText etUsername;
     private EditText etPassword;
     private EditText etRePassword;
     private EditText etNama;
@@ -39,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         etNoHp = findViewById(R.id.no_hp);
+        etUsername = findViewById(R.id.username);
         etPassword = findViewById(R.id.password);
         etRePassword = findViewById(R.id.re_password);
         etNama = findViewById(R.id.nama);
@@ -82,6 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String noHp = etNoHp.getText().toString();
+                String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 String rePassword = etRePassword.getText().toString();
                 String nama = etNama.getText().toString();
@@ -90,6 +93,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (noHp.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "No. hp kosong", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (username.isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "Username kosong", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (password.isEmpty()) {
@@ -117,6 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 Map<String, String> param = new HashMap<>();
                 param.put("no_hp", noHp);
+                param.put("username", username);
                 param.put("password", password);
                 param.put("nama", nama);
                 param.put("jenis_kelamin", jenisKelamin);

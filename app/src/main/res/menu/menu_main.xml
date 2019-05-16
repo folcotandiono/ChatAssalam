@@ -5,6 +5,15 @@
     tools:context=".MainActivity">
 
     <item
+        android:id="@+id/menu_refresh"
+        android:title=""
+        android:icon="@drawable/ic_refresh_black_24dp"
+        app:showAsAction="ifRoom">
+
+    </item>
+
+    <item
+        android:id="@+id/menu_search"
         android:title=""
         android:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="ifRoom">

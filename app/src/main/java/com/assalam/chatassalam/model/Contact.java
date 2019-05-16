@@ -21,6 +21,8 @@ public class Contact {
     private String tanggalLahir;
     @SerializedName("gambar")
     private String gambar;
+    @SerializedName("status_taaruf")
+    private String statusTaaruf;
 
     public String getIdUser() {
         return idUser;
@@ -76,5 +78,13 @@ public class Contact {
 
     public void setGambar(String gambar) {
         this.gambar = gambar;
+    }
+
+    public String getStatusTaaruf() {
+        return statusTaaruf;
+    }
+
+    public void setStatusTaaruf(String statusTaaruf) {
+        this.statusTaaruf = statusTaaruf;
     }
 }

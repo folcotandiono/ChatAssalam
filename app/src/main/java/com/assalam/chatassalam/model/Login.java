@@ -11,6 +11,8 @@ public class Login {
     private String response;
     @SerializedName("id_user")
     private String idUser;
+    @SerializedName("username")
+    private String username;
     @SerializedName("nama")
     private String nama;
     @SerializedName("no_hp")
@@ -19,6 +21,10 @@ public class Login {
     private String jenisKelamin;
     @SerializedName("tanggal_lahir")
     private String tanggalLahir;
+    @SerializedName("status_taaruf")
+    private String statusTaaruf;
+    @SerializedName("gambar")
+    private String gambar;
 
     public String getResponse() {
         return response;
@@ -66,5 +72,29 @@ public class Login {
 
     public void setTanggalLahir(String tanggalLahir) {
         this.tanggalLahir = tanggalLahir;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getStatusTaaruf() {
+        return statusTaaruf;
+    }
+
+    public void setStatusTaaruf(String statusTaaruf) {
+        this.statusTaaruf = statusTaaruf;
+    }
+
+    public String getGambar() {
+        return gambar;
+    }
+
+    public void setGambar(String gambar) {
+        this.gambar = gambar;
     }
 }

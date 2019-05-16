@@ -65,6 +65,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="4dp"
                     android:text="BubbleLayout"
+                    android:textColor="@color/colorBlack"
                      />
 
             </com.daasuu.bl.BubbleLayout>

@@ -1,12 +1,18 @@
 package com.assalam.chatassalam;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -26,6 +32,10 @@ public class TaarufFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private SharedPreferences sharedPreferences;
+    private ImageView ivGambar;
+    private TextView tvNama;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +74,17 @@ public class TaarufFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_taaruf, container, false);
+        View view = inflater.inflate(R.layout.fragment_taaruf, container, false);
+
+        ivGambar = view.findViewById(R.id.gambar);
+        tvNama = view.findViewById(R.id.nama);
+
+        sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+
+        Picasso.get().load("https://www.assalam.id/assets/panel/images/" + sharedPreferences.getString("gambar", "")).into(ivGambar);
+        tvNama.setText(sharedPreferences.getString("nama", ""));
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

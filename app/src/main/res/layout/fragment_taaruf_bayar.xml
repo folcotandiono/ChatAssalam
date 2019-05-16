@@ -1,0 +1,36 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_taaruf_bayar" >
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:text="Jika ingin meng-aktifkan Menu Ta’aruf Mohon berinfaq Sebesar 50.000,- (Lima Puluh Ribu
+Rupiah) Ke Rekening Bank Di Bawah ini"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="
+1. BRI Atas Nama Sutrisno Rekening 123455566\n
+Virtual Account BRI\n
+2. BCA Atas Nama Sutrisno Rekening 123455566\n
+Virtual Account BCA\n
+3. Bank Permata Atas Nama Sutrisno Rekening 123455566\n
+Virtual Account Permata\n
+4. OVO – Transfer – Transfer Antar OVO\n
+Nominal : 50.000 Ke Nomor : 0852 4756 2997\n
+5. GO-PAY – BAYAR – Bayar Lewat NoHP : 0852 4756 2997\n
+Nominal : 50.000 – Konfirmasi – Bayar\n"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+</FrameLayout>
