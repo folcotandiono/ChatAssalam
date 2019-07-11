@@ -1,6 +1,11 @@
 package com.assalam.chatassalam.api;
 
+import com.assalam.chatassalam.TergabungDiGroup;
+import com.assalam.chatassalam.model.AddFriend;
+import com.assalam.chatassalam.model.CheckFriend;
 import com.assalam.chatassalam.model.Contact;
+import com.assalam.chatassalam.model.EditProfil;
+import com.assalam.chatassalam.model.EditProfilTaaruf;
 import com.assalam.chatassalam.model.GetTime;
 import com.assalam.chatassalam.model.GetTimeDifference;
 import com.assalam.chatassalam.model.Group;
@@ -8,6 +13,7 @@ import com.assalam.chatassalam.model.Login;
 import com.assalam.chatassalam.model.PembayaranTaaruf;
 import com.assalam.chatassalam.model.Register;
 import com.assalam.chatassalam.model.StatusTaaruf;
+import com.assalam.chatassalam.model.Teman;
 
 import java.util.List;
 import java.util.Map;
@@ -74,4 +80,24 @@ public interface ApiInterface {
 
     @GET("assets/file/search_user.php")
     Call<List<Contact>> searchUser(@QueryMap Map<String, String> param);
+
+    @POST("assets/file/add_friend.php")
+    Call<AddFriend> addFriend(@QueryMap Map<String, String> param);
+
+    @GET("assets/file/check_friend.php")
+    Call<CheckFriend> checkFriend(@QueryMap Map<String, String> param);
+
+    @GET("assets/file/list_friend.php")
+    Call<List<Contact>> listFriend(@QueryMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("assets/file/edit_profil.php")
+    Call<EditProfil> editProfil(@FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("assets/file/edit_profil_taaruf.php")
+    Call<EditProfilTaaruf> editProfilTaaruf(@FieldMap Map<String, String> param);
+
+    @GET("assets/file/tergabung_di_group.php")
+    Call<TergabungDiGroup> tergabungDiGroup(@QueryMap Map<String, String> param);
 }

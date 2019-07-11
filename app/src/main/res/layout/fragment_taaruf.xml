@@ -55,6 +55,7 @@
         <!--</LinearLayout>-->
 
         <LinearLayout
+            android:id="@+id/chat"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -112,6 +113,7 @@
         <!--</LinearLayout>-->
 
         <LinearLayout
+            android:id="@+id/search"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -125,6 +127,26 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="Cari"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/profil"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_person_black_24dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Profil Taaruf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

@@ -1,11 +1,7 @@
 package com.assalam.chatassalam;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -15,54 +11,38 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.assalam.chatassalam.api.ApiClient;
 import com.assalam.chatassalam.api.ApiInterface;
 import com.assalam.chatassalam.model.Chat;
-import com.assalam.chatassalam.model.ChatHeader;
-import com.assalam.chatassalam.model.Contact;
 import com.assalam.chatassalam.model.GetTime;
-import com.assalam.chatassalam.model.GetTimeDifference;
-import com.assalam.chatassalam.model.Group;
 import com.daasuu.bl.ArrowDirection;
 import com.daasuu.bl.BubbleLayout;
-import com.firebase.ui.database.FirebaseListAdapter;
-import com.firebase.ui.database.FirebaseListOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.github.library.bubbleview.BubbleDrawable;
-import com.github.library.bubbleview.BubbleTextView;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ServerValue;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -76,12 +56,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatTaarufActivity extends AppCompatActivity {
 
     private LinearLayout llLayoutPertama;
     private Toolbar tToolbar;
     private CircleImageView civGambar;
-    private RecyclerView lvListView;
+    private RecyclerView rvRecyclerView;
     private EditText etMessage;
     private FloatingActionButton fab;
     private DatabaseReference mDatabase;
@@ -99,7 +79,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_chat_taaruf);
 
         llLayoutPertama = findViewById(R.id.layout_pertama);
         llLayoutPertama.setBackground(getResources().getDrawable(R.drawable.chat));
@@ -114,13 +94,13 @@ public class ChatActivity extends AppCompatActivity {
         civGambar = findViewById(R.id.gambar);
         Picasso.get().load(R.drawable.guru).into(civGambar);
 
-        lvListView = findViewById(R.id.list_view);
+        rvRecyclerView = findViewById(R.id.recycler_view);
 //        lvListView.setDivider(null);
 
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(ChatActivity.this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(ChatTaarufActivity.this);
 
         // Now set the layout manager and the adapter to the RecyclerView
-        lvListView.setLayoutManager(mLayoutManager);
+        rvRecyclerView.setLayoutManager(mLayoutManager);
 
         etMessage = findViewById(R.id.message);
         fab = findViewById(R.id.fab);
@@ -152,21 +132,21 @@ public class ChatActivity extends AppCompatActivity {
                         String timestamp = response.body().getTanggal();
                         String id = mDatabase.push().getKey();
                         if (status.equals("personal")) {
-                            mDatabase.child("chat").child(idUser).child(status + "_" + idUserLain).child(id).child("pesan").setValue(etMessage.getText().toString());
-                            mDatabase.child("chat").child(idUser).child(status + "_" + idUserLain).child(id).child("id_user").setValue(sharedPreferences.getString("id_user", ""));
-                            mDatabase.child("chat").child(idUser).child(status + "_" + idUserLain).child(id).child("nama").setValue(sharedPreferences.getString("nama", ""));
-                            mDatabase.child("chat").child(idUser).child(status + "_" + idUserLain).child(id).child("waktu").setValue(timestamp);
-                            mDatabase.child("chat").child(idUser).child(status + "_" + idUserLain).child(id).child("read").setValue("0");
-                            mDatabase.child("chat_header").child(idUser).child(status + "_" + idUserLain + "_" + idUser).child("pesan_terakhir").setValue(etMessage.getText().toString());
-                            mDatabase.child("chat_header").child(idUser).child(status + "_" + idUserLain + "_" + idUser).child("waktu").setValue(timestamp);
+                            mDatabase.child("chat_taaruf").child(idUser).child(status + "_" + idUserLain).child(id).child("pesan").setValue(etMessage.getText().toString());
+                            mDatabase.child("chat_taaruf").child(idUser).child(status + "_" + idUserLain).child(id).child("id_user").setValue(sharedPreferences.getString("id_user", ""));
+                            mDatabase.child("chat_taaruf").child(idUser).child(status + "_" + idUserLain).child(id).child("nama").setValue(sharedPreferences.getString("nama", ""));
+                            mDatabase.child("chat_taaruf").child(idUser).child(status + "_" + idUserLain).child(id).child("waktu").setValue(timestamp);
+                            mDatabase.child("chat_taaruf").child(idUser).child(status + "_" + idUserLain).child(id).child("read").setValue("0");
+                            mDatabase.child("chat_header_taaruf").child(idUser).child(status + "_" + idUserLain + "_" + idUser).child("pesan_terakhir").setValue(etMessage.getText().toString());
+                            mDatabase.child("chat_header_taaruf").child(idUser).child(status + "_" + idUserLain + "_" + idUser).child("waktu").setValue(timestamp);
 
-                            mDatabase.child("chat").child(idUserLain).child(status + "_" + idUser).child(id).child("pesan").setValue(etMessage.getText().toString());
-                            mDatabase.child("chat").child(idUserLain).child(status + "_" + idUser).child(id).child("id_user").setValue(sharedPreferences.getString("id_user", ""));
-                            mDatabase.child("chat").child(idUserLain).child(status + "_" + idUser).child(id).child("nama").setValue(sharedPreferences.getString("nama", ""));
-                            mDatabase.child("chat").child(idUserLain).child(status + "_" + idUser).child(id).child("waktu").setValue(timestamp);
-                            mDatabase.child("chat").child(idUserLain).child(status + "_" + idUser).child(id).child("read").setValue("0");
-                            mDatabase.child("chat_header").child(idUserLain).child(status + "_" + idUser + "_" + idUserLain).child("pesan_terakhir").setValue(etMessage.getText().toString());
-                            mDatabase.child("chat_header").child(idUserLain).child(status + "_" + idUser + "_" + idUserLain).child("waktu").setValue(timestamp);
+                            mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idUser).child(id).child("pesan").setValue(etMessage.getText().toString());
+                            mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idUser).child(id).child("id_user").setValue(sharedPreferences.getString("id_user", ""));
+                            mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idUser).child(id).child("nama").setValue(sharedPreferences.getString("nama", ""));
+                            mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idUser).child(id).child("waktu").setValue(timestamp);
+                            mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idUser).child(id).child("read").setValue("0");
+                            mDatabase.child("chat_header_taaruf").child(idUserLain).child(status + "_" + idUser + "_" + idUserLain).child("pesan_terakhir").setValue(etMessage.getText().toString());
+                            mDatabase.child("chat_header_taaruf").child(idUserLain).child(status + "_" + idUser + "_" + idUserLain).child("waktu").setValue(timestamp);
 
                             TOPIC = "/topics/" + idUserLain; //topic must match with what the receiver subscribed to
 
@@ -187,13 +167,13 @@ public class ChatActivity extends AppCompatActivity {
                         }
                         else {
                             for (String idUserLain : listIdUserLain) {
-                                mDatabase.child("chat").child(idUserLain).child(status + "_" + idGroup).child(id).child("pesan").setValue(etMessage.getText().toString());
-                                mDatabase.child("chat").child(idUserLain).child(status + "_" + idGroup).child(id).child("id_user").setValue(sharedPreferences.getString("id_user", ""));
-                                mDatabase.child("chat").child(idUserLain).child(status + "_" + idGroup).child(id).child("nama").setValue(sharedPreferences.getString("nama", ""));
-                                mDatabase.child("chat").child(idUserLain).child(status + "_" + idGroup).child(id).child("waktu").setValue(timestamp);
-                                mDatabase.child("chat").child(idUserLain).child(status + "_" + idGroup).child(id).child("read").setValue("0");
-                                mDatabase.child("chat_header").child(idUserLain).child(status + "_" + idGroup).child("pesan_terakhir").setValue(etMessage.getText().toString());
-                                mDatabase.child("chat_header").child(idUserLain).child(status + "_" + idGroup).child("waktu").setValue(timestamp);
+                                mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idGroup).child(id).child("pesan").setValue(etMessage.getText().toString());
+                                mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idGroup).child(id).child("id_user").setValue(sharedPreferences.getString("id_user", ""));
+                                mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idGroup).child(id).child("nama").setValue(sharedPreferences.getString("nama", ""));
+                                mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idGroup).child(id).child("waktu").setValue(timestamp);
+                                mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idGroup).child(id).child("read").setValue("0");
+                                mDatabase.child("chat_header_taaruf").child(idUserLain).child(status + "_" + idGroup).child("pesan_terakhir").setValue(etMessage.getText().toString());
+                                mDatabase.child("chat_header_taaruf").child(idUserLain).child(status + "_" + idGroup).child("waktu").setValue(timestamp);
 
                                 TOPIC = "/topics/" + idUserLain; //topic must match with what the receiver subscribed to
 
@@ -203,8 +183,8 @@ public class ChatActivity extends AppCompatActivity {
                                     notifcationBody.put("status", "group");
                                     notifcationBody.put("pesan", etMessage.getText().toString());
                                     notifcationBody.put("id_group", idGroup);
-                                    notifcationBody.put("dari", idUser);
                                     notifcationBody.put("nama", nama);
+                                    notifcationBody.put("dari", idUser);
 
                                     notification.put("to", TOPIC);
                                     notification.put("data", notifcationBody);
@@ -223,7 +203,7 @@ public class ChatActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 //Do something after 100ms
-                                lvListView.scrollToPosition(lvListView.getAdapter().getItemCount() - 1);
+                                rvRecyclerView.scrollToPosition(rvRecyclerView.getAdapter().getItemCount() - 1);
                             }
                         }, 300);
                     }
@@ -238,33 +218,33 @@ public class ChatActivity extends AppCompatActivity {
 
         Query query;
 
-        if (status.equals("personal")) query = FirebaseDatabase.getInstance().getReference().child("chat").child(idUser).child(status + "_" + idUserLain);
-        else query = FirebaseDatabase.getInstance().getReference().child("chat").child(idUser).child(status + "_" + idGroup);
+        if (status.equals("personal")) query = FirebaseDatabase.getInstance().getReference().child("chat_taaruf").child(idUser).child(status + "_" + idUserLain);
+        else query = FirebaseDatabase.getInstance().getReference().child("chat_taaruf").child(idUser).child(status + "_" + idGroup);
 
         FirebaseRecyclerOptions<Chat> options =
                 new FirebaseRecyclerOptions.Builder<Chat>()
                         .setQuery(query, Chat.class)
                         .build();
 
-        adapter = new FirebaseRecyclerAdapter<Chat, ChatActivity.ViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Chat, ChatTaarufActivity.ViewHolder>(options) {
 
             @Override
             public void onError(@NonNull DatabaseError error) {
                 super.onError(error);
-                Toast.makeText(ChatActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatTaarufActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
             @Override
-            public ChatActivity.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            public ChatTaarufActivity.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //                Toast.makeText(ChatActivity.this, "create", Toast.LENGTH_SHORT).show();
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.card_chat, parent, false);
 
-                return new ChatActivity.ViewHolder(view);
+                return new ChatTaarufActivity.ViewHolder(view);
             }
 
 
             @Override
-            protected void onBindViewHolder(ChatActivity.ViewHolder holder, final int position, Chat model) {
+            protected void onBindViewHolder(ChatTaarufActivity.ViewHolder holder, final int position, Chat model) {
 //                Toast.makeText(ChatActivity.this, "bind", Toast.LENGTH_SHORT).show();
                 DatabaseReference itemRef = getRef(position);
                 String itemKey = itemRef.getKey();
@@ -330,13 +310,13 @@ public class ChatActivity extends AppCompatActivity {
                         llNamaWaktuKanan.setVisibility(View.VISIBLE);
 
                         if (status.equals("personal")) {
-                            mDatabase.child("chat").child(idUser).child(status + "_" + idUserLain).child(itemKey).child("read").setValue("1");
-                            mDatabase.child("chat").child(idUserLain).child(status + "_" + idUser).child(itemKey).child("read").setValue("1");
+                            mDatabase.child("chat_taaruf").child(idUser).child(status + "_" + idUserLain).child(itemKey).child("read").setValue("1");
+                            mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idUser).child(itemKey).child("read").setValue("1");
                         }
                         else {
                             for (String idUserLain : listIdUserLain) {
                                 if (idUserLain.equals(idUser)) continue;
-                                mDatabase.child("chat").child(idUserLain).child(status + "_" + idGroup).child(itemKey).child("read").setValue("1");
+                                mDatabase.child("chat_taaruf").child(idUserLain).child(status + "_" + idGroup).child(itemKey).child("read").setValue("1");
                             }
                         }
                     }
@@ -396,14 +376,14 @@ public class ChatActivity extends AppCompatActivity {
 
         };
         adapter.startListening();
-        lvListView.setAdapter(adapter);
+        rvRecyclerView.setAdapter(adapter);
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 //Do something after 100ms
-                lvListView.scrollToPosition(lvListView.getAdapter().getItemCount() - 1);
+                rvRecyclerView.scrollToPosition(rvRecyclerView.getAdapter().getItemCount() - 1);
             }
         }, 3000);
 
@@ -479,7 +459,7 @@ public class ChatActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     public void run() {
                         try {
-                            new RequestServerTime().execute();
+                            new ChatTaarufActivity.RequestServerTime().execute();
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
                         }
@@ -522,5 +502,4 @@ public class ChatActivity extends AppCompatActivity {
         protected void onPostExecute() {
         }
     }
-
 }

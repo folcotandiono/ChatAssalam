@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +25,9 @@ import com.assalam.chatassalam.api.ApiClient;
 import com.assalam.chatassalam.api.ApiInterface;
 import com.assalam.chatassalam.model.Contact;
 import com.assalam.chatassalam.model.StatusTaaruf;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +67,6 @@ CameraFragment.OnFragmentInteractionListener {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(vpViewPager);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_call_black_24dp);
-        tabLayout.getTabAt(4).setIcon(R.drawable.ic_camera_alt_black_24dp);
 
         vpViewPager.setCurrentItem(1);
 
@@ -71,10 +74,19 @@ CameraFragment.OnFragmentInteractionListener {
         String statusTaaruf = sharedPreferences.getString("status_taaruf", "");
 
         if (statusTaaruf.equals("1")) {
+            tabLayout.getTabAt(4).setIcon(R.drawable.ic_camera_alt_black_24dp);
         }
         else {
-            tabLayout.removeTabAt(3);
+            tabLayout.getTabAt(3).setIcon(R.drawable.ic_camera_alt_black_24dp);
         }
+
+
+        FirebaseMessaging.getInstance().subscribeToTopic(sharedPreferences.getString("id_user", ""))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                    }
+                });
     }
 
     @Override
@@ -140,6 +152,15 @@ CameraFragment.OnFragmentInteractionListener {
                 }
             });
         }
+        else if (id == R.id.menu_profil) {
+            Intent intent = new Intent(HomeActivity.this, UserDetailActivity.class);
+            SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+            intent.putExtra("id_user", sharedPreferences.getString("id_user", ""));
+            intent.putExtra("nama", sharedPreferences.getString("nama", ""));
+            intent.putExtra("no_hp", sharedPreferences.getString("no_hp", ""));
+            intent.putExtra("gambar", sharedPreferences.getString("gambar", ""));
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -163,39 +184,79 @@ class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
             return new ChatFragment();
         } else if (position == 2){
             return new PanggilanFragment();
-        } else if (position == 3) {
-            Fragment fragment = new TaarufFragment();
-            return fragment;
-        } else if (position == 4) {
-            return new CameraFragment();
-        } else {
-            return null;
+        }
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("login", Context.MODE_PRIVATE);
+        String statusTaaruf = sharedPreferences.getString("status_taaruf", "");
+        if (statusTaaruf.equals("1")) {
+            if (position == 3) {
+                Fragment fragment = new TaarufFragment();
+                return fragment;
+            } else if (position == 4) {
+                return new CameraFragment();
+            } else {
+                return null;
+            }
+        }
+        else {
+            if (position == 3) {
+                Fragment fragment = new CameraFragment();
+                return fragment;
+            } else {
+                return null;
+            }
         }
     }
 
     // This determines the number of tabs
     @Override
     public int getCount() {
-        return 5;
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("login", Context.MODE_PRIVATE);
+        String statusTaaruf = sharedPreferences.getString("status_taaruf", "");
+        if (statusTaaruf.equals("1")) {
+            return 5;
+        }
+        else {
+            return 4;
+        }
     }
 
     // This determines the title for each tab
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
-        switch (position) {
-            case 0:
-                return "STATUS";
-            case 1:
-                return "CHAT";
-            case 2:
-                return "";
-            case 3:
-                return "TA'ARUF";
-            case 4:
-                return "";
-            default:
-                return null;
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("login", Context.MODE_PRIVATE);
+        String statusTaaruf = sharedPreferences.getString("status_taaruf", "");
+        if (statusTaaruf.equals("1")) {
+
+            switch (position) {
+                case 0:
+                    return "STATUS";
+                case 1:
+                    return "CHAT";
+                case 2:
+                    return "";
+                case 3:
+                    return "TA'ARUF";
+                case 4:
+                    return "";
+                default:
+                    return null;
+            }
+        }
+        else {
+
+            switch (position) {
+                case 0:
+                    return "STATUS";
+                case 1:
+                    return "CHAT";
+                case 2:
+                    return "";
+                case 3:
+                    return "";
+                default:
+                    return null;
+            }
         }
     }
 

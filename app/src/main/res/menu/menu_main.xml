@@ -25,4 +25,9 @@
         android:title="Aktivasi Ta'aruf"
         app:showAsAction="ifRoom"></item>
 
+    <item
+        android:id="@+id/menu_profil"
+        android:title="Profil Assalam"
+        app:showAsAction="ifRoom"></item>
+
 </menu>

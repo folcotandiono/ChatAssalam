@@ -1,6 +1,7 @@
 package com.assalam.chatassalam;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,6 +37,9 @@ public class TaarufFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private ImageView ivGambar;
     private TextView tvNama;
+    private LinearLayout llChat;
+    private LinearLayout llSearch;
+    private LinearLayout llProfil;
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,11 +82,47 @@ public class TaarufFragment extends Fragment {
 
         ivGambar = view.findViewById(R.id.gambar);
         tvNama = view.findViewById(R.id.nama);
+        llChat = view.findViewById(R.id.chat);
+        llSearch = view.findViewById(R.id.search);
+        llProfil = view.findViewById(R.id.profil);
 
         sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
 
         Picasso.get().load("https://www.assalam.id/assets/panel/images/" + sharedPreferences.getString("gambar", "")).into(ivGambar);
         tvNama.setText(sharedPreferences.getString("nama", ""));
+
+        llChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ChatHeaderTaarufActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        llSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        llProfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), UserDetailTaarufActivity.class);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+                intent.putExtra("id_user", sharedPreferences.getString("id_user", ""));
+                intent.putExtra("nama", sharedPreferences.getString("nama", ""));
+                intent.putExtra("username", sharedPreferences.getString("username", ""));
+                intent.putExtra("gambar", sharedPreferences.getString("gambar", ""));
+                intent.putExtra("jenis_kelamin", sharedPreferences.getString("jenis_kelamin", ""));
+                intent.putExtra("no_hp", sharedPreferences.getString("no_hp", ""));
+                intent.putExtra("tanggal_lahir", sharedPreferences.getString("tanggal_lahir", ""));
+                intent.putExtra("status_taaruf", sharedPreferences.getString("status_taaruf", ""));
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
